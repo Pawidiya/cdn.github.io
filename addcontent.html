@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tambahkan referensi ke Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Data to GitHub</title>
+</head>
+<body>
+    <div class="container mx-auto p-4">
+        <div id="upload-form" class="bg-white p-6 rounded-lg shadow-md">
+            <h1 class="text-2xl font-semibold mb-4">Upload Data to GitHub</h1>
+            <div class="mb-4">
+                <label for="imgUrl" class="block text-sm font-medium text-gray-600">Image URL:</label>
+                <input type="text" id="imgUrl" class="block w-full px-3 py-2 rounded-md border border-gray-300" placeholder="Image URL">
+            </div>
+            <div class="mb-4">
+                <label for="judul" class="block text-sm font-medium text-gray-600">Judul:</label>
+                <input type="text" id="judul" class="block w-full px-3 py-2 rounded-md border border-gray-300" placeholder="Judul">
+            </div>
+            <div class="mb-4">
+                <label for="desc" class="block text-sm font-medium text-gray-600">Deskripsi:</label>
+                <textarea id="desc" class="block w-full px-3 py-2 rounded-md border border-gray-300" placeholder="Deskripsi"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="link" class="block text-sm font-medium text-gray-600">Link:</label>
+                <input type="text" id="link" class="block w-full px-3 py-2 rounded-md border border-gray-300" placeholder="Link">
+            </div>
+            <button onclick="addData()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add Data</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk menambahkan data ke Data.json di GitHub
+        async function addData() {
+            const imgUrl = document.getElementById("imgUrl").value;
+            const judul = document.getElementById("judul").value;
+            const desc = document.getElementById("desc").value;
+            const link = document.getElementById("link").value;
+
+            const newData = {
+                img: imgUrl,
+                judul: judul,
+                desc: desc,
+                link: link
+            };
+
+            const accessToken = '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'; // Ganti dengan akses token GitHub Anda
+            const owner = 'Pawidiya'; // Ganti dengan pemilik repositori
+            const repo = 'pawidiya'; // Ganti dengan nama repositori
+            const path = 'Data.json'; // Ganti dengan path file Data.json
+
+            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+            
+            try {
+                // Mengambil data yang sudah ada di GitHub
+                const existingDataResponse = await fetch(apiUrl);
+                const existingData = await existingDataResponse.json();
+
+                const updatedData = JSON.parse(atob(existingData.content));
+                updatedData.push(newData);
+
+                const content = btoa(JSON.stringify(updatedData, null, 2));
+
+                // Mengunggah kembali JSON yang telah diperbarui
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${accessToken}`
+                    },
+                    body: JSON.stringify({
+                        message: 'Add data to Data.json',
+                        content: content,
+                        sha: existingData.sha
+                    })
+                });
+
+                if (response.status === 200) {
+                    alert('Data berhasil ditambahkan ke GitHub.');
+                } else {
+                    alert('Gagal menambahkan data ke GitHub.');
+                }
+            } catch (error) {
+                console.error("Gagal menambahkan data:", error);
+            }
+        }
+    </script>
+</body>
+</html>

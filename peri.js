@@ -1,4 +1,43 @@
- const peri = "@I Putu Peri Awidiya Surya - 2301010055";
+ document.getElementById('content').innerHTML = `<div class="container mx-auto">
+            <header class="bg-transparent text-dark py-0">
+                <div class="container mx-auto flex justify-between mr-10 items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center mx-2 ml-3">
+                        <img src="https://i.pinimg.com/originals/40/eb/08/40eb08d0268f7df4e2083039d0608a92.jpg" alt="Logo Anda" class="h-10 w-10 mr-2 rounded-full">
+                        <h1 class="text-2xl font-semibold text-white">MLBB SKIN FANNY</h1>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="bg-white p-0 rounded-md shadow-md w-30">
+                            <form action="#" method="GET" class="flex items-center " id="search-form">
+                                <input type="text" name="search" placeholder="Ayo cari skin favorit kamu" class="py-1 px-2 w-64 rounded focus:outline-none focus:ring focus:ring-indigo-300">
+                            </form>                                            
+                        </div>
+                    </div>
+                    <nav class="mr-3">
+                        <ul class="flex pl-0 space-x-5 mx-2 bottom-2 py-5">
+                            <li><a href="#" class="hover:text-blue-700 button-30 w-24">Home</a></li>
+                            <li><a href="#" class="hover:text-blue-700 button-30 w-24">About</a></li>
+                            <li><a href="#" class="hover:text-blue-700 button-30 w-24">Service</a></li>
+                            <li><a href="#" class="hover:text-blue-700 button-30 w-24">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </div>
+        
+        <div class="container px-5">
+            <div id="data-container" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+        </div>
+    
+    
+        <footer class="bg-transparent text-black relative bottom-0 w-full">
+            <div class="container mx-auto">
+                <p id="peri"></p>
+            </div>
+        </footer>
+    `;
+
+const peri = "@I Putu Peri Awidiya Surya - 2301010055";
         const periElement = document.getElementById('peri'); // Mengambil elemen dengan id 'peri'
         periElement.innerHTML = peri; // Mengubah innerHTML dari elemen
 
